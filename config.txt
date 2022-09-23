@@ -5,7 +5,7 @@
 # 公众号appSecret
 "app_secret": "d9eb9a87dd995f16a1cd90291f979413",
 # 模板消息id
-"template_id": "jvB7sfCEecCEdHJJU0uaC5Nm7n5OtAStETqojpjOqVU",
+"template_id": "GWyyzcQKYMPsxNh9avD9BAf1wmP5W9EvsBqLR8xO_dI",
 # 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔，例如["wx1", "wx2"]
 "user": ["o-6e45jxrpBdHawBo6qAWDNIRMbM"],
 
@@ -15,11 +15,11 @@
 # 天行数据apikey 
 "tian_api": "e9e8ac4a1ecdc5ae7e8338ef7e0130ca",
 # 所在地区，可为省，城市，区，县，同时支持国外城市，例如伦敦(国外城市可能获取不到pm2.5，空气质量，今日建议等数据)
-"region": "惠济区",
+"region": "卧龙区",
 # 生日1
-"birthday1": {"name": "可爱津津", "birthday": "2000-04-01"},
+"birthday1": {"name": "小吴", "birthday": "2000-02-04"},
 # 在一起的日子，格式同上
-"love_date": "2015-07-18",
+"love_date": "2021-03-20",
 # 金句中文，如果为空，默认会读取金山的每日金句
 "note_ch": "",
 # 金句英文
@@ -31,5 +31,5 @@
 # 运势类型 today,tomorrow,week,month,year
 "luckType": "today",
 # 星座名称
-"consName": "金牛座"
+"consName": "双鱼座"
 }
