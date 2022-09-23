@@ -30,7 +30,33 @@ def get_access_token():
     # print(access_token)
     return access_token
 
-
+def getLuck(luckType,consName):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                      'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+    }
+    luckToken = config["luckToken"]
+    region_url = "http://web.juhe.cn/constellation/getAll?key={}&consName={}&type={}".format(luckToken,consName,luckType)
+    response = get(region_url, headers=headers).json()
+    if response["error_code"] != 0:
+        print("发生异常，错误码:",response["error_code"])
+        os.system("pause")
+        sys.exit(1)
+    # 星座名
+    luckName = response["name"]
+    # 日期*
+    luckDateTime = response["datetime"]
+    # 综合指数
+    luckAll = response["all"]
+    # 幸运色
+    luckColor = response["color"]
+    # 财运指数
+    luckMoney = response["money"]
+    # 幸运数字
+    luckNumber = response["number"]
+    # 今日概括
+    luckSummary = response["summary"]
+    return luckName,luckDateTime,luckAll,luckColor,luckMoney,luckNumber,luckSummary
 def get_weather(region):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
@@ -160,7 +186,7 @@ def get_ciba():
 
 
 def send_message(to_user, access_token, region_name, weather, temp, wind_dir, note_ch, note_en, max_temp, min_temp,
-                 sunrise, sunset, category, pm2p5, proposal, chp):
+                 sunrise, sunset, category, pm2p5, proposal, chp,luckName,luckDateTime,luckAll,luckColor,luckMoney,luckNumber,luckSummary):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
     year = localtime().tm_year
@@ -250,7 +276,34 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
                 "value": chp,
                 "color": get_color()
             },
-
+            "luckName": {
+                "value": luckName,
+                "color": get_color()
+            },
+            "luckDateTime": {
+                "value": luckDateTime,
+                "color": get_color()
+            },
+            "luckAll": {
+                "value": luckAll,
+                "color": get_color()
+            },
+            "luckColor": {
+                "value": luckColor,
+                "color": get_color()
+            },
+            "luckMoney": {
+                "value": luckMoney,
+                "color": get_color()
+            },
+            "luckNumber": {
+                "value": luckNumber,
+                "color": get_color()
+            },
+            "luckSummary": {
+                "value": luckSummary,
+                "color": get_color()
+            },
         }
     }
     for key, value in birthdays.items():
@@ -300,6 +353,11 @@ if __name__ == "__main__":
     # 传入地区获取天气信息
     region = config["region"]
     weather, temp, max_temp, min_temp, wind_dir, sunrise, sunset, category, pm2p5, proposal = get_weather(region)
+    # 获取星座运势
+    luckType = config["luckType"]
+    consName = config["consName"]
+    # 星座名   日期      综合指数  幸运色   财运指数   幸运数字   今日概括
+    luckName,luckDateTime,luckAll,luckColor,luckMoney,luckNumber,luckSummary = getLuck(luckType,consName)
     note_ch = config["note_ch"]
     note_en = config["note_en"]
     if note_ch == "" and note_en == "":
@@ -309,5 +367,5 @@ if __name__ == "__main__":
     # 公众号推送消息
     for user in users:
         send_message(user, accessToken, region, weather, temp, wind_dir, note_ch, note_en, max_temp, min_temp, sunrise,
-                     sunset, category, pm2p5, proposal, chp)
+                     sunset, category, pm2p5, proposal, chp,luckName,luckDateTime,luckAll,luckColor,luckMoney,luckNumber,luckSummary)
     os.system("pause")
